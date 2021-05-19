@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <ul class="nav nav-tabs">
+        <!--
+
+          routerLink catches the click on the element, prevents the default
+          which would be to send a request to server and get the page it instead analyzes what we passed here 
+          to the routerLink directive,so this path or this array of path elements and then parses it and 
+          checks if it finds a fitting
+          route in our configuration which it of course does because we defined all the paths we're using here.
+          And this is how we can navigate around with a routerLink. It doesn't restart our app, therefore it 
+          keeps the app state and it's much faster than reloading the page all the time.
+        -->
+        <!--
+          routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" 
+          Well the routerLink active directive does one thing,
+          it analyzes your currently loaded path and then checks which links lead to a route which uses this 
+          path and by default, it marks an element as active, it marks this
+          CSS class if it contains the path you are on or if this link is part of the path which is currently
+          loaded.
+          So for the /servers link or the /users link,
+          this is of course the case once we click servers or users. For the slash nothing link, which is the first
+          one, the home page,this is always the case,we always have slash nothing at the beginning of our path 
+          here, so if we are on /users, well there is this empty path in-between you could say, the same for 
+          servers and the same for just home of course.
+          So the empty path segment is part of all paths,Still we don't want to have the home being marked as active all the time.
+          So to fix this, we can add some configuration to this routerLink active directive. So we can add a 
+          special configuration to our routerLink active directive,
+          so on the same element as routerLink active was added to, we can add routerLinkActiveOptions
+So with square brackets, we can pass anything which will be resolved dynamically, like this Javascript
+object
+
+and here, we can basically add one important configuration, say exact and set this to true. So exact is
+a kind of a reserved property on this object you passed to routerLink active options
+and this will now basically tell Angular only add this routerLink active class,
+so this active CSS class in this case,if the exact, the full path is well whatever does link leads to,
+so only if everything is just slash and not if it is only part of the path. So with this in place,
+now you see it still is marked as active on the empty path, at the starting page but if you go to
+/servers, now only servers is marked as active because now we fixed this, we change the default behavior
+to make sure we only mark this if the full path is whatever we have on our routerLink.
+        -->
+        <li role="presentation" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <a routerLink="/">Home
+          </a>
+        </li>
+        <li role="presentation" routerLinkActive="active">
+          <a routerLink="servers">
+            Servers</a>
+        </li>
+        <li role="presentation" routerLinkActive="active">
+          <a routerLink="users">
+            Users</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!--
+          and now you don't add your component with its selector but you add a special directive shipping with
+        Angular, the router-outlet.
+      Now this looks like a component but it still only is a directive,
+      keep in mind directives may have any selector including this component or this elements style selector.
+      And with this, this now simply marks the place in our document where we want the Angular router to load
+      the component of the currently selected route.
+        -->
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+
+</div>
